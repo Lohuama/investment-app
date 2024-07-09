@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -10,13 +12,10 @@ import {
     Grid,
     Paper,
     Box,
-    Tooltip,
-    Avatar,
 } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import investment_image from "../../../public/assets/investment.jpg";
 import Image from 'next/image';
 import VisaIcon from '../../../public/assets/visa.svg';
 import MasterIcon from '../../../public/assets/master.svg';
@@ -30,6 +29,8 @@ const CreateInvestment = () => {
         dataCriacao: new Date(),
         valorInicial: '',
     });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,14 +47,25 @@ const CreateInvestment = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (parseFloat(formState.valorInicial) < 0) {
             alert('O valor inicial não pode ser negativo.');
             return;
         }
-        console.log('Formulário enviado:', formState);
-        router.push('/');
+
+        setIsSubmitting(true);
+
+        try {
+            console.log('Formulário enviado:', formState);
+
+            router.push('/');
+        } catch (error) {
+            console.error('Erro ao enviar o formulário:', error);
+            alert('Ocorreu um erro ao criar o investimento. Tente novamente.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -65,7 +77,7 @@ const CreateInvestment = () => {
                         Invista já!
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    Os investimentos rendem 0,52% ao mês, pagos na mesma data de criação do investimento. Utilize cálculos precisos para ganhos compostos.
+                        Os investimentos rendem 0,52% ao mês, pagos na mesma data de criação do investimento. Utilize cálculos precisos para ganhos compostos.
                     </Typography>
                     <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
                         Formas de investimentos aceitas:
@@ -96,15 +108,19 @@ const CreateInvestment = () => {
                                     sx={{ borderRadius: 8 }}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DatePicker
-                                        label="Data de Criação"
+                            <Grid item xs={12} >
+                                     <TextField
+                                        //label="DataCriacao"
+                                        type="Date"
+                                        name="DataCriacao"
                                         value={formState.dataCriacao}
-                                        onChange={handleDateChange}
-                                        renderInput={(params) => <TextField {...params} fullWidth required variant="outlined" />}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        required
+                                        variant="outlined"
+                                        inputProps={{ min: "0" }}
+                                        sx={{ borderRadius: 8 }}
                                     />
-                                </LocalizationProvider>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -121,8 +137,8 @@ const CreateInvestment = () => {
                                 />
                             </Grid>
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Button type="submit" variant="contained" color="primary" sx={{ borderRadius: 8 }}>
-                                    Criar Investimento
+                                <Button type="submit" variant="contained" color="primary" sx={{ borderRadius: 8 }} disabled={isSubmitting}>
+                                    {isSubmitting ? 'Enviando...' : 'Criar Investimento'}
                                 </Button>
                             </Grid>
                         </Grid>
