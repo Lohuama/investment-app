@@ -1,4 +1,4 @@
-import InvestmentDetails from "../components/InvestmentDetails/InvestmentDetails";
+import InvestmentDetails from "../components/InvestmentDetails";
 
 
 const InvestmentPage = () => {
