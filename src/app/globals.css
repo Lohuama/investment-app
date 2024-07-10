@@ -11,4 +11,5 @@
 }
 html, body {
   font-family: 'Quicksand', sans-serif;
+  scroll-behavior: smooth;
 }
