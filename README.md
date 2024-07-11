@@ -1,38 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Investment App
 
-## Getting Started
+Este é um projeto Next.js para gerenciar detalhes de investimentos.
 
-First, run the development server:
+## Primeiros Passos
+
+Primeiramente, clone o repositório e instale as dependências:
 
 ```bash
+git clone <url-do-repositorio>
+cd investment-app
+npm install
+
+Em seguida, você pode iniciar o servidor de desenvolvimento:
+
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000 no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando pages/index.tsx. A página é atualizada automaticamente conforme você edita o arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Este projeto utiliza o Next.js para renderização no servidor e roteamento, e inclui recursos de otimização para fontes usando next/font para carregar e otimizar automaticamente fontes como a Inter, uma fonte personalizada do Google.
 
-## Learn More
+Storybook
+Para visualizar e desenvolver componentes de forma isolada, você pode usar o Storybook. Primeiramente, instale as dependências necessárias:
 
-To learn more about Next.js, take a look at the following resources:
+npm install --save-dev @storybook/react
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Em seguida, adicione um script ao seu package.json para iniciar o Storybook:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+{
+  "scripts": {
+    "storybook": "start-storybook -p 6006"
+  }
+}
 
-## Deploy on Vercel
+Para criar arquivos de histórias (stories) para seus componentes, crie um diretório stories na raiz do seu projeto e adicione os arquivos .stories.tsx para cada componente. Por exemplo, AreaChartComponent.stories.tsx.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Dentro de cada arquivo .stories.tsx, você pode escrever histórias para seus componentes usando o Storybook.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# investment-app
-# investment-app
+Saiba Mais
+Para aprender mais sobre o Next.js, confira os seguintes recursos:
+
+Documentação do Next.js - aprenda sobre os recursos e API do Next.js.
+Aprenda Next.js - um tutorial interativo do Next.js.
+Você também pode conferir o repositório do Next.js no GitHub para mais informações e contribuir para o projeto.
+
+Deploy no Vercel
+A forma mais simples de fazer o deploy do seu aplicativo Next.js é utilizando a Plataforma Vercel criada pelos criadores do Next.js.
+
+Confira a documentação de deploy do Next.js para mais detalhes sobre como fazer o deploy da sua aplicação.
+
+
+Este README.md agora inclui uma seção sobre o Storybook, explicando como configurar e usar o Storybook para desenvolvimento de componentes no projeto Next.js.
