@@ -10,19 +10,9 @@ import {
   Tooltip,
   Legend
 } from "recharts";
+import { investmentData } from "../../../utils";
 
-const investmentData = {
-  initialValue: 10000,
-  creationDate: new Date(2023, 0, 1),
-  withdrawals: [
-    { month: "Jan", amount: 0 }, // Janeiro: 0 (apenas para iniciar)
-    { month: "Feb", amount: 0 }, // Fevereiro: 0
-    { month: "Mar", amount: 2000 }, // Março: 2000 (exemplo de retirada)
-    { month: "Apr", amount: 0 }, // Abril: 0
-    { month: "May", amount: 0 }, // Maio: 0
-    { month: "Jun", amount: 1500 } // Junho: 1500 (exemplo de retirada)
-  ]
-};
+
 
 // Função para calcular o saldo esperado com ganhos compostos
 const calculateExpectedBalance = (initialValue: number, creationDate: Date, withdrawals: { month: string; amount: number}[]) => {
@@ -76,7 +66,7 @@ const AreaChartComponent = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Area type="monotone" dataKey="amount" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" dataKey="amount" stroke="" fill="#00ed9d" />
       </AreaChart>
     </ResponsiveContainer>
   );

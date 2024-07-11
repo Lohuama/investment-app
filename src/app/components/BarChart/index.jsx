@@ -61,16 +61,16 @@ const productSales = [
         <Bar
           type="monotone"
           dataKey="product1"
-          stroke="#2563eb"
-          fill="#3b82f6"
+          stroke="#00ed9d"
+          fill="black"
           stackId="1"
         />
 
         <Bar
           type="monotone"
           dataKey="product2"
-          stroke="#7c3aed"
-          fill="#8b5cf6"
+          stroke="#black"
+          fill="#00ed9d"
           stackId="1"
         />
       </BarChart>

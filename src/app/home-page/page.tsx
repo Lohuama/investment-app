@@ -1,91 +1,206 @@
-// pages/index.js
+"use client";
 
-import Head from 'next/head';
-import { Container, Typography } from '@mui/material';
-import AreaChartComponent from '../components/AreaChart';
-import Navbar from '../components/Navbar';
-import BarChartComponent from '../components/BarChart';
-import LineChartComponent from '../components/LineChart';
+import { useEffect, useState } from "react";
+import { Typography, Button, Grid, Paper } from "@mui/material";
+import AreaChartComponent from "../components/AreaChart";
+import NavBar from "../components/Navbar";
+import GridItem from "../components/GridItem";
+import BarChartComponent from "../components/BarChart";
+import LineChartComponent from "../components/LineChart";
 
-const HomePage = () => {
-    return (
-        <>
-            <Head>
-                <title>Landing Page - Investimentos</title>
-            </Head>
-            <Navbar />
-            <Container maxWidth="lg" className="py-8">
-                <div className="text-center">
-                    <Typography variant="h2" className="mb-4">Bem-vindo à </Typography>
-                    <Typography variant="h5" className="text-gray-700 mb-8">
-                        A melhor plataforma para gerenciar seus investimentos de forma inteligente.
-                    </Typography>
-                </div>
+export default function Home() {
+  const [investimento, setInvestimento] = useState(null);
 
-                <section id="investments" className="bg-gray-100 py-12">
-                    <Container maxWidth="xl">
-                        <Typography variant="h4" className="text-center mb-6">Investimentos</Typography>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div>
-                                <AreaChartComponent />
-                            </div>
-                            <div>
-                                <Typography variant="body1" className="text-gray-700">
-                                    Veja seus investimentos crescerem ao longo do tempo com nossos gráficos detalhados.
-                                </Typography>
-                            </div>
-                        </div>
-                    </Container>
-                </section>
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-slideIn");
+        }
+      });
+    });
 
-                <section id="about" className="py-12">
-                    <Container maxWidth="xl">
-                        <Typography variant="h4" className="text-center mb-6">Sobre Nós</Typography>
-                        <Typography variant="body1" className="text-gray-700">
-                            ConvertaX é a plataforma líder em gerenciamento de investimentos, oferecendo soluções inovadoras para todos os seus projetos financeiros.
-                        </Typography>
-                    </Container>
-                </section>
+    const sections = document.querySelectorAll(".section");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
 
-                <section id="services" className="bg-gray-100 py-12">
-                    <Container maxWidth="xl">
-                        <Typography variant="h4" className="text-center mb-6">Nossos Serviços</Typography>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="text-center bg-white p-6 rounded-lg shadow-md">
-                                <Typography variant="h5" className="mb-4">Serviço 1</Typography>
-                                <Typography variant="body1" className="text-gray-700">
-                                    Descrição do serviço 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    <BarChartComponent />
-                                </Typography>
-                            </div>
-                            <div className="text-center bg-white p-6 rounded-lg shadow-md">
-                                <Typography variant="h5" className="mb-4">Serviço 2</Typography>
-                                <Typography variant="body1" className="text-gray-700">
-                                    Descrição do serviço 2. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                                    <LineChartComponent />
-                                </Typography>
-                            </div>
-                            <div className="text-center bg-white p-6 rounded-lg shadow-md">
-                                <Typography variant="h5" className="mb-4">Serviço 3</Typography>
-                                <Typography variant="body1" className="text-gray-700">
-                                    Descrição do serviço 3. Duis aute irure dolor in reprehenderit in voluptate.
-                                </Typography>
-                            </div>
-                        </div>
-                    </Container>
-                </section>
+    return () => {
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
 
-                <section id="contact" className="py-12">
-                    <Container maxWidth="xl">
-                        <Typography variant="h4" className="text-center mb-6">Contato</Typography>
-                        <Typography variant="body1" className="text-gray-700">
-                            Entre em contato conosco através do e-mail: <a href="mailto:contato@convertax.com" className="text-blue-500">contato@convertax.com</a>
-                        </Typography>
-                    </Container>
-                </section>
-            </Container>
-        </>
-    );
-};
+  const handleCreateInvestment = (newInvestimento) => {
+    setInvestimento(newInvestimento);
+  };
 
-export default HomePage;
+  return (
+    <main className="relative poppins md:px-[9rem]">
+      <NavBar />
+      <div className="px-4 flex flex-col gap-[7.69rem]">
+        {/* Hero Section */}
+        <section className="section relative mt-[4rem] text-center opacity-0">
+          <Typography
+            variant="h1"
+            className="volkhov font-bold text-[3rem] md:text-[4.73756rem] leading-large text-lightBlack"
+          >
+            Bem-vindo à ConvertaX
+          </Typography>
+          <Typography
+            variant="body1"
+            className="my-[1.6rem] font-bold leading-[1.692rem] text-lightGray text-[1rem]"
+          >
+            A melhor plataforma para gerenciar seus investimentos de forma
+            inteligente.
+          </Typography>
+          <a href="/create-investiment">
+            <Button
+              variant="contained"
+              className="mt-[2rem] animate-bounce"
+              style={{ backgroundColor: "#13da87", color: "black" }}
+            >
+              Comece Agora
+            </Button>
+          </a>
+        </section>
+
+        {/* Chart Section */}
+        <section className="section relative mt-[4rem] opacity-0">
+          <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
+          <Typography
+            variant="body1"
+            className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+          >
+            Seguraca e transparência.
+          </Typography>
+            <div className="grid xl:grid-cols-3 lg:grid-cols-2 w-full gap-10 max-w-[1400px]">
+              <GridItem title="Area Chart">
+                <AreaChartComponent />
+              </GridItem>
+              <GridItem title="Bar chart"><BarChartComponent/></GridItem>
+              <GridItem title="Line chart"> <LineChartComponent /> </GridItem>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="section relative mt-[4rem] text-center opacity-0">
+          <Typography
+            variant="h2"
+            className="volkhov font-bold text-[2rem] md:text-[3rem] leading-large text-lightBlack"
+          >
+            Nossos Recursos
+          </Typography>
+          <Typography
+            variant="body1"
+            className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+          >
+            Descubra as funcionalidades incríveis que oferecemos para você
+            gerenciar seus investimentos com eficiência.
+          </Typography>
+          <div className="flex flex-wrap justify-center gap-8 mt-[2rem]">
+            <div className="feature-card bg-white shadow-md p-4 rounded-lg w-[300px]">
+              <img src="/images/convertx.jpeg" alt="Feature 1" />
+              <Typography
+                variant="h6"
+                className="font-bold text-[1.5rem] text-lightBlack mt-4"
+              >
+                Gerenciamento Avançado
+              </Typography>
+              <Typography variant="body2" className="mt-2 text-lightGray">
+                Ferramentas de gerenciamento avançadas para acompanhar seus
+                investimentos.
+              </Typography>
+            </div>
+            <div className="feature-card bg-white shadow-md p-4 rounded-lg w-[300px]">
+              <img src="/images/convertx.jpeg" alt="Feature 2" />
+              <Typography
+                variant="h6"
+                className="font-bold text-[1.5rem] text-lightBlack mt-4"
+              >
+                Análises Detalhadas
+              </Typography>
+              <Typography variant="body2" className="mt-2 text-lightGray">
+                Análises detalhadas para você tomar as melhores decisões.
+              </Typography>
+            </div>
+            <div className="feature-card bg-white shadow-md p-4 rounded-lg w-[300px]">
+              <img src="/images/convertx.jpeg" alt="Feature 3" />
+              <Typography
+                variant="h6"
+                className="font-bold text-[1.5rem] text-lightBlack mt-4"
+              >
+                Segurança Garantida
+              </Typography>
+              <Typography variant="body2" className="mt-2 text-lightGray">
+                Sua segurança é nossa prioridade. Proteção total para seus
+                dados.
+              </Typography>
+            </div>
+          </div>
+        </section>
+
+        {/* Investment Details Section */}
+        {investimento && (
+          <section className="section relative mt-[4rem] opacity-0">
+            <Paper elevation={4} sx={{ padding: 4 }}>
+              <Typography
+                variant="h2"
+                className="volkhov font-bold text-[2rem] md:text-[3rem] leading-large text-lightBlack mb-4 text-center"
+              >
+                Detalhes do Investimento
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Typography
+                    variant="body1"
+                    className="font-bold text-lightGray"
+                  >
+                    Proprietário: {investimento.proprietario}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography
+                    variant="body1"
+                    className="font-bold text-lightGray"
+                  >
+                    Data de Criação: {investimento.dataCriacao}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography
+                    variant="body1"
+                    className="font-bold text-lightGray"
+                  >
+                    Valor Inicial: {investimento.valorInicial}
+                  </Typography>
+                </Grid>
+                {/* Aqui você pode adicionar mais informações conforme necessário */}
+              </Grid>
+            </Paper>
+          </section>
+        )}
+
+        {/* Contact Section */}
+        <section className="section relative mt-[4rem] text-center opacity-0">
+          <Typography
+            variant="h2"
+            className="volkhov font-bold text-[2rem] md:text-[3rem] leading-large text-lightBlack"
+          >
+            Contato
+          </Typography>
+          <Typography
+            variant="body1"
+            className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+          >
+            Fale conosco para saber mais sobre como podemos ajudar você a
+            alcançar seus objetivos financeiros.
+          </Typography>
+          <div className="flex justify-center mt-[2rem]"></div>
+        </section>
+      </div>
+    </main>
+  );
+}
