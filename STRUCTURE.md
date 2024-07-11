@@ -37,6 +37,6 @@ Estrutura do Projeto
 
 ## Como me localizar no projeto?
 
-Todas as páginas do projeto estão listadas em ./app
-Todos os componentes estão em ./src/components
+Todas as páginas do projeto estão listadas em ./app/app
+Todos os componentes estão em ./app/src/components
 Uma vez dentro de uma página você pode ir navegando pelos componentes para ir se encontrando e fazer a alteração que deseja
