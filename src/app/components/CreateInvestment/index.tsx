@@ -18,7 +18,7 @@ const CreateInvestmentComponent = () => {
 
     const [formState, setFormState] = useState({
         proprietario: '',
-        dataCriacao: new Date().toISOString().split('T')[0], // Formatando para tipo 'date'
+        dataCriacao: new Date().toISOString().split('T')[0],
         valorInicial: '',
     });
 
@@ -49,10 +49,8 @@ const CreateInvestmentComponent = () => {
         setIsSubmitting(true);
 
         try {
-            // Aqui você pode implementar a lógica para enviar os dados do formulário para a API ou LocalStorage
             console.log('Formulário enviado:', formState);
 
-            // Simulando uma navegação de volta para a página inicial
             router.push('/investment');
         } catch (error) {
             console.error('Erro ao enviar o formulário:', error);

@@ -56,50 +56,7 @@ function NavBar() {
             )}
           </div>
         </div>
-        {menu ? (
-          <div className="my-8 select-none animate-in slide-in-from-right ">
-            <div className="flex flex-col gap-8 mt-8 mx-4 ">
-              <div className="flex gap-[20px] xl:gap-[50px] text-[16px] flex-col select-none ">
-                <p
-                  className={`hover:text-white text-navText font-[600] cursor-pointer flex items-center gap-2`}
-                >
-                  Destinations
-                </p>
-                <p
-                  className={`hover:text-white text-navText font-[600] cursor-pointer flex items-center gap-2`}
-                >
-                  Hotels
-                </p>
-                <p
-                  className={`hover:text-white text-navText font-[600] cursor-pointer flex items-center gap-2`}
-                >
-                  Flights
-                </p>
-                <p
-                  className={`hover:text-white text-navText font-[600] cursor-pointer flex items-center gap-2`}
-                >
-                  Bookings
-                </p>
-
-                <Link
-                  href="/auth/login"
-                  className="hover:text-white text-navText font-[600] cursor-pointer flex items-center gap-2 "
-                >
-                  Login
-                </Link>
-
-                <div className="flex gap-2 items-center cursor-pointer">
-                  <p className="font-[700]">EN</p>
-                  <div>
-                    <img src="/images/chevron-down.png" alt="chevron down" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div></div>
-        )}
+        
       </div>
     </div>
   );
