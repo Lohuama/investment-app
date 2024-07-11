@@ -7,7 +7,7 @@ Este é um projeto Next.js para gerenciar detalhes de investimentos.
 Primeiramente, clone o repositório e instale as dependências:
 
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/Lohuama/investment-app
 cd investment-app
 npm install
 
