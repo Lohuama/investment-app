@@ -12,6 +12,7 @@ import {
     Box,
 } from '@mui/material';
 import NavBar from '../Navbar';
+import React from 'react';
 
 const CreateInvestmentComponent = () => {
     const router = useRouter();
@@ -41,16 +42,16 @@ const CreateInvestmentComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (parseFloat(formState.valorInicial) < 0) {
-            alert('O valor inicial não pode ser negativo.');
+        if (parseFloat(formState.valorInicial) <= 0) {
+            alert('O valor inicial deve ser maior que zero.');
             return;
         }
-
+    
         setIsSubmitting(true);
-
+    
         try {
-            console.log('Formulário enviado:', formState);
-
+            localStorage.setItem('investmentData', JSON.stringify(formState));
+    
             router.push('/investment');
         } catch (error) {
             console.error('Erro ao enviar o formulário:', error);
@@ -59,6 +60,7 @@ const CreateInvestmentComponent = () => {
             setIsSubmitting(false);
         }
     };
+    
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -154,4 +156,4 @@ const CreateInvestmentComponent = () => {
     );
 };
 
-export default CreateInvestmentComponent;
+export default React.memo(CreateInvestmentComponent);

@@ -6,16 +6,22 @@ import {
 import AreaChartComponent from '../AreaChart';
 import BarChartComponent from '../BarChart';
 import LineChartComponent from '../LineChart';
-import { InvestmentData } from '../../../utils'; // Importe o tipo InvestmentData aqui
+import GridItem from '../GridItem';
 
-const InvestmentViewComponent = ({ investmentData, investmentData1, investmentData2 }) => {
+const InvestmentViewComponent = () => {
+    const investmentData = JSON.parse(localStorage.getItem('investmentData'));
+
     // Cálculos de saldo esperado e tributação
     const saldoEsperado = React.useMemo(() => {
         const dataCriacao = new Date(investmentData.dataCriacao).getTime();
         const hoje = new Date().getTime();
         const tempoInvestimentoMeses = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 30);
         const taxaMensal = 0.52 / 100;
-        const saldoEsperado = investmentData.valorInicial * Math.pow(1 + taxaMensal, tempoInvestimentoMeses);
+
+        // Considera o máximo de 12 meses para o cálculo
+        const mesesCalculados = Math.min(tempoInvestimentoMeses, 12);
+        const saldoEsperado = investmentData.valorInicial * Math.pow(1 + taxaMensal, mesesCalculados);
+
         return saldoEsperado.toFixed(2);
     }, [investmentData]);
 
@@ -24,6 +30,8 @@ const InvestmentViewComponent = ({ investmentData, investmentData1, investmentDa
         const hoje = new Date().getTime();
         const tempoInvestimentoAnos = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 365);
         let percentualTributacao = 0;
+        
+        // Define a tributação com base no tempo de investimento
         if (tempoInvestimentoAnos < 1) {
             percentualTributacao = 22.5;
         } else if (tempoInvestimentoAnos >= 1 && tempoInvestimentoAnos <= 2) {
@@ -31,12 +39,19 @@ const InvestmentViewComponent = ({ investmentData, investmentData1, investmentDa
         } else {
             percentualTributacao = 15;
         }
+
         return percentualTributacao.toFixed(1);
     }, [investmentData]);
 
+    // Mock de retiradas
+    const retiradas = [
+        { month: "Mar", amount: 2000 },
+        { month: "Jun", amount: 1500 }
+    ];
+
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" gutterBottom style={{ marginTop: '50px'}}>
+            <Typography variant="h5" gutterBottom>
                 Detalhes do Investimento
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -55,28 +70,24 @@ const InvestmentViewComponent = ({ investmentData, investmentData1, investmentDa
                 Tributação: {tributacao}%
             </Typography>
 
+            <Typography variant="body1" gutterBottom>
+                Histórico de Retiradas:
+            </Typography>
+            <ul>
+                {retiradas.map((retirada, index) => (
+                    <li key={index}>
+                        {retirada.month}: R$ {retirada.amount}
+                    </li>
+                ))}
+            </ul>
+
             <Box sx={{ mt: 4 }}>
                 <GridItem title="Area Chart">
-                    <AreaChartComponent />
-                </GridItem>
-                <GridItem title="Bar chart">
-                    <BarChartComponent />
-                </GridItem>
-                <GridItem title="Line chart">
-                    <LineChartComponent />
+                    <AreaChartComponent withdrawals={retiradas} />
                 </GridItem>
             </Box>
         </Box>
     );
 };
-
-function GridItem({ title, children }) {
-    return (
-        <div className="flex flex-col items-center justify-center p-4 border border-slate-900 rounded-xl h-[400px] mt-40" style={{background: 'linear-gradient(to right, #e5f3e7, #ffffff)' }}>
-            <h3 className="text-2x1 font-semibold text-white mb-4 ">{title}</h3>
-            {children}
-        </div>
-    )
-}
 
 export default React.memo(InvestmentViewComponent);

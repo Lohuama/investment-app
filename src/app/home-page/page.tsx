@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Typography, Button, Grid, Paper } from "@mui/material";
-import AreaChartComponent from "../components/AreaChart";
-import NavBar from "../components/Navbar";
-import GridItem from "../components/GridItem";
-import BarChartComponent from "../components/BarChart";
-import LineChartComponent from "../components/LineChart";
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { Typography, Button, Grid, Paper } from '@mui/material';
+import NavBar from '../components/Navbar';
+
+// Importe os componentes dinamicamente
+const AreaChartComponent = dynamic(() => import('../components/AreaChart'));
+const BarChartComponent = dynamic(() => import('../components/BarChart'));
+const LineChartComponent = dynamic(() => import('../components/LineChart'));
+const GridItem = dynamic(() => import('../components/GridItem'));
 
 export default function Home() {
   const [investimento, setInvestimento] = useState(null);
@@ -15,12 +18,12 @@ export default function Home() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-slideIn");
+          entry.target.classList.add('animate-slideIn');
         }
       });
     });
 
-    const sections = document.querySelectorAll(".section");
+    const sections = document.querySelectorAll('.section');
     sections.forEach((section) => {
       observer.observe(section);
     });
@@ -59,7 +62,7 @@ export default function Home() {
             <Button
               variant="contained"
               className="mt-[2rem] animate-bounce"
-              style={{ backgroundColor: "#13da87", color: "black" }}
+              style={{ backgroundColor: '#13da87', color: 'black' }}
             >
               Comece Agora
             </Button>
@@ -69,18 +72,22 @@ export default function Home() {
         {/* Chart Section */}
         <section className="section relative mt-[4rem] opacity-0">
           <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
-          <Typography
-            variant="body1"
-            className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
-          >
-            Seguraca e transparência.
-          </Typography>
+            <Typography
+              variant="body1"
+              className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+            >
+              Seguraca e transparência.
+            </Typography>
             <div className="grid xl:grid-cols-3 lg:grid-cols-2 w-full gap-10 max-w-[1400px]">
               <GridItem title="Area Chart">
                 <AreaChartComponent />
               </GridItem>
-              <GridItem title="Bar chart"><BarChartComponent/></GridItem>
-              <GridItem title="Line chart"> <LineChartComponent /> </GridItem>
+              <GridItem title="Bar chart">
+                <BarChartComponent />
+              </GridItem>
+              <GridItem title="Line chart">
+                <LineChartComponent />
+              </GridItem>
             </div>
           </div>
         </section>

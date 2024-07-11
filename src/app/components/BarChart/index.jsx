@@ -1,5 +1,6 @@
 'use client';
 
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -11,45 +12,40 @@ import {
   Legend
 } from "recharts";
 
-const productSales = [
-  {
-    name: "Jan",
-    product1: 4000,
-    product2: 2400,
-  },
-  {
-    name: "Feb",
-    product1: 3000,
-    product2: 2210,
-  },
-  {
-    name: "Mar",
-    product1: 2000,
-    product2: 2290,
-  },
-  {
-    name: "Apr",
-    product1: 2780,
-    product2: 2000,
-  },
-  {
-    name: "May",
-    product1: 1890,
-    product2: 2181,
-  },
-  {
-    name: "Jun",
-    product1: 2390,
-    product2: 2500,
-  },
-];
- const BarChartComponent = () => {
+const BarChartComponent = React.memo(({ investmentData }) => {
+  const CustomTooltip = ({ active, payload, label }) => {
+    if(active && payload && payload.length){
+      return(
+        <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
+            <p className="text-medium text-lg">{label}</p>
+            <p className="text-sm text-blue-400">
+              Revenue: 
+              <span className="ml-2">${payload[0].value}</span>
+            </p>
+            <p className="text-sm text-blue-400">
+              Profit: 
+              <span className="ml-2">${payload[1].value}</span>
+            </p>
+            <p className="text-sm text-blue-400">
+              Tax Rate: 
+              <span className="ml-2">{investmentData.taxRate}</span>
+            </p>
+        </div>
+      )
+    }
+  };
+
+  // Verifica se investmentData está definido
+  if (!investmentData) {
+    return <div>Dados de investimento não disponíveis.</div>;
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart 
         width={500} 
         height={400} 
-        data={productSales}
+        data={investmentData}
         margin={{ right: 30 }}
       >
         <YAxis />
@@ -76,24 +72,6 @@ const productSales = [
       </BarChart>
     </ResponsiveContainer>
   );
-};
-
-const CustomTooltip = ({ active, payload, label }) => {
-    if(active && payload && payload.length){
-      return(
-        <div className="p-4 bg-slate-900 flex flex-col gap-4 rounded-md">
-            <p className="text-medium text-lg">{label}</p>
-            <p className="text-sm text-blue-400">
-              Revenue: 
-              <span className="ml-2">${payload[0].value}</span>
-            </p>
-            <p className="text-sm text-blue-400">
-              Profit: 
-              <span className="ml-2">${payload[1].value}</span>
-            </p>
-        </div>
-      )
-    }
-}
+});
 
 export default BarChartComponent;
