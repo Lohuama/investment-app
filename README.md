@@ -37,3 +37,4 @@ Voce pode modificar os dados no storybook para ver a atualizaçao do grafico de 
 
 Este README.md agora inclui uma seção sobre o Storybook, explicando como configurar e usar o Storybook para desenvolvimento de componentes no projeto Next.js.
 # new_investment_app
+# new_investment_app
