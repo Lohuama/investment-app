@@ -11,7 +11,7 @@ import InvestmentViewComponent from '../components/InvestmentViewComponent';
 
 interface InvestmentData {
     proprietario: string;
-    dataCriacao: string; // ou Date, dependendo do formato em que está salvo no localStorage
+    dataCriacao: string; 
     valorInicial: number;
     withdrawals: { month: string; amount: number}[];
 }
@@ -37,10 +37,7 @@ const InvestmentViewPage = () => {
                     </Typography>
                     {investmentData ? (
                         <>
-                            <Typography variant="body1" gutterBottom>
-                                Menos de um ano: 22,5%
-                            </Typography>
-                            <InvestmentViewComponent />
+                            <InvestmentViewComponent investmentData={investmentData} />
                         </>
                     ) : (
                         <Typography variant="body1">

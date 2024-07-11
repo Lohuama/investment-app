@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     Typography,
     Box,
@@ -8,24 +8,31 @@ import BarChartComponent from '../BarChart';
 import LineChartComponent from '../LineChart';
 import GridItem from '../GridItem';
 
-const InvestmentViewComponent = () => {
-    const investmentData = JSON.parse(localStorage.getItem('investmentData'));
+interface InvestmentData {
+    proprietario: string;
+    dataCriacao: string; 
+    valorInicial: number;
+    withdrawals: { month: string; amount: number}[];
+}
 
+interface InvestmentViewComponentProps {
+    investmentData: InvestmentData;
+}
+
+const InvestmentViewComponent: React.FC<InvestmentViewComponentProps> = ({ investmentData }) => {
     // Cálculos de saldo esperado e tributação
-    const saldoEsperado = React.useMemo(() => {
+    const saldoEsperado = useMemo(() => {
         const dataCriacao = new Date(investmentData.dataCriacao).getTime();
         const hoje = new Date().getTime();
         const tempoInvestimentoMeses = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 30);
         const taxaMensal = 0.52 / 100;
 
-        // Considera o máximo de 12 meses para o cálculo
-        const mesesCalculados = Math.min(tempoInvestimentoMeses, 12);
-        const saldoEsperado = investmentData.valorInicial * Math.pow(1 + taxaMensal, mesesCalculados);
+        const saldoEsperado = investmentData.valorInicial * Math.pow(1 + taxaMensal, tempoInvestimentoMeses);
 
         return saldoEsperado.toFixed(2);
     }, [investmentData]);
 
-    const tributacao = React.useMemo(() => {
+    const tributacao = useMemo(() => {
         const dataCriacao = new Date(investmentData.dataCriacao).getTime();
         const hoje = new Date().getTime();
         const tempoInvestimentoAnos = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 365);
@@ -34,7 +41,7 @@ const InvestmentViewComponent = () => {
         // Define a tributação com base no tempo de investimento
         if (tempoInvestimentoAnos < 1) {
             percentualTributacao = 22.5;
-        } else if (tempoInvestimentoAnos >= 1 && tempoInvestimentoAnos <= 2) {
+        } else if (tempoInvestimentoAnos >= 1 && tempoInvestimentoAnos < 2) {
             percentualTributacao = 18.5;
         } else {
             percentualTributacao = 15;
@@ -44,10 +51,17 @@ const InvestmentViewComponent = () => {
     }, [investmentData]);
 
     // Mock de retiradas
-    const retiradas = [
-        { month: "Mar", amount: 2000 },
-        { month: "Jun", amount: 1500 }
-    ];
+    const retiradas = investmentData.withdrawals;
+
+    // Dados do gráfico
+    const chartData = useMemo(() => {
+        return retiradas.map((retirada, index) => ({
+            month: retirada.month,
+            saldoEsperado: parseFloat(saldoEsperado),
+            retirada: retirada.amount,
+            tributacao: parseFloat((parseFloat(saldoEsperado) * (parseFloat(tributacao) / 100)).toFixed(2))
+        }));
+    }, [retiradas, saldoEsperado, tributacao]);
 
     return (
         <Box sx={{ mt: 4 }}>
@@ -83,7 +97,7 @@ const InvestmentViewComponent = () => {
 
             <Box sx={{ mt: 4 }}>
                 <GridItem title="Area Chart">
-                    <AreaChartComponent withdrawals={retiradas} />
+                    <AreaChartComponent data={chartData} />
                 </GridItem>
             </Box>
         </Box>
