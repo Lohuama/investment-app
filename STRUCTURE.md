@@ -26,7 +26,6 @@ ou
 npm run build && npm run start
 Pronto 🎉
 
-techguide.sh
 Estrutura do Projeto
 
 ./src/app/            : É a página que o Next.js usa para montar o sistema de roteamento
