@@ -14,6 +14,10 @@ const GridItem = dynamic(() => import('../components/GridItem'));
 export default function Home() {
   const [investimento, setInvestimento] = useState(null);
 
+  // Dados mockados para os gráficos
+  const mockAreaChartData = [10, 20, 30, 40, 50, 60, 70];
+  const mockBarChartData = [5, 15, 25, 35, 45, 55, 65];
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -71,26 +75,19 @@ export default function Home() {
 
         {/* Chart Section */}
         <section className="section relative mt-[4rem] opacity-0">
-          <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
-            <Typography
-              variant="body1"
-              className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
-            >
-              Seguraca e transparência.
-            </Typography>
-            <div className="grid xl:grid-cols-3 lg:grid-cols-2 w-full gap-10 max-w-[1400px]">
-              <GridItem title="Area Chart">
-                <AreaChartComponent />
-              </GridItem>
-              <GridItem title="Bar chart">
-                <BarChartComponent />
-              </GridItem>
-              <GridItem title="Line chart">
-                <LineChartComponent />
-              </GridItem>
-            </div>
-          </div>
-        </section>
+  <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
+    <Typography
+      variant="body1"
+      className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+    >
+      Segurança e transparência.
+    </Typography>
+    <div className="w-full max-w-[1400px]">
+      <LineChartComponent />
+    </div>
+  </div>
+</section>
+
 
         {/* Features Section */}
         <section className="section relative mt-[4rem] text-center opacity-0">
