@@ -1,27 +1,19 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
     Typography,
     Box,
 } from '@mui/material';
 import AreaChartComponent from '../AreaChart';
-import BarChartComponent from '../BarChart';
-import LineChartComponent from '../LineChart';
 import GridItem from '../GridItem';
 
-interface InvestmentData {
-    proprietario: string;
-    dataCriacao: string; 
-    valorInicial: number;
-    withdrawals: { month: string; amount: number}[];
-}
+const InvestmentViewComponent = () => {
+    // Obter os dados do investimento do localStorage
+    const investmentData = JSON.parse(localStorage.getItem('investmentData'));
 
-interface InvestmentViewComponentProps {
-    investmentData: InvestmentData;
-}
+    // Cálculo do saldo esperado com juros compostos de 0,52% ao mês
+    const saldoEsperado = React.useMemo(() => {
+        if (!investmentData) return 0;
 
-const InvestmentViewComponent: React.FC<InvestmentViewComponentProps> = ({ investmentData }) => {
-    // Cálculos de saldo esperado e tributação
-    const saldoEsperado = useMemo(() => {
         const dataCriacao = new Date(investmentData.dataCriacao).getTime();
         const hoje = new Date().getTime();
         const tempoInvestimentoMeses = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 30);
@@ -29,39 +21,18 @@ const InvestmentViewComponent: React.FC<InvestmentViewComponentProps> = ({ inves
 
         const saldoEsperado = investmentData.valorInicial * Math.pow(1 + taxaMensal, tempoInvestimentoMeses);
 
-        return saldoEsperado.toFixed(2);
+        return saldoEsperado.toFixed(2); // Retornar o saldo esperado com duas casas decimais
     }, [investmentData]);
 
-    const tributacao = useMemo(() => {
-        const dataCriacao = new Date(investmentData.dataCriacao).getTime();
-        const hoje = new Date().getTime();
-        const tempoInvestimentoAnos = (hoje - dataCriacao) / (1000 * 60 * 60 * 24 * 365);
-        let percentualTributacao = 0;
-        
-        // Define a tributação com base no tempo de investimento
-        if (tempoInvestimentoAnos < 1) {
-            percentualTributacao = 22.5;
-        } else if (tempoInvestimentoAnos >= 1 && tempoInvestimentoAnos < 2) {
-            percentualTributacao = 18.5;
-        } else {
-            percentualTributacao = 15;
-        }
-
-        return percentualTributacao.toFixed(1);
-    }, [investmentData]);
-
-    // Mock de retiradas
-    const retiradas = investmentData.withdrawals;
-
-    // Dados do gráfico
-    const chartData = useMemo(() => {
-        return retiradas.map((retirada, index) => ({
-            month: retirada.month,
-            saldoEsperado: parseFloat(saldoEsperado),
-            retirada: retirada.amount,
-            tributacao: parseFloat((parseFloat(saldoEsperado) * (parseFloat(tributacao) / 100)).toFixed(2))
-        }));
-    }, [retiradas, saldoEsperado, tributacao]);
+    if (!investmentData) {
+        return (
+            <Box sx={{ mt: 4 }}>
+                <Typography variant="body1">
+                    Dados de investimento não encontrados no localStorage.
+                </Typography>
+            </Box>
+        );
+    }
 
     return (
         <Box sx={{ mt: 4 }}>
@@ -80,24 +51,10 @@ const InvestmentViewComponent: React.FC<InvestmentViewComponentProps> = ({ inves
             <Typography variant="body1" gutterBottom>
                 Saldo Esperado: R$ {saldoEsperado}
             </Typography>
-            <Typography variant="body1" gutterBottom>
-                Tributação: {tributacao}%
-            </Typography>
-
-            <Typography variant="body1" gutterBottom>
-                Histórico de Retiradas:
-            </Typography>
-            <ul>
-                {retiradas.map((retirada, index) => (
-                    <li key={index}>
-                        {retirada.month}: R$ {retirada.amount}
-                    </li>
-                ))}
-            </ul>
 
             <Box sx={{ mt: 4 }}>
                 <GridItem title="Area Chart">
-                    <AreaChartComponent data={chartData} />
+                    <AreaChartComponent saldoInicial={investmentData.valorInicial} saldoEsperado={Number(saldoEsperado)} />
                 </GridItem>
             </Box>
         </Box>

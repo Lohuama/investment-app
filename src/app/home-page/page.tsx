@@ -53,7 +53,7 @@ export default function Home() {
             variant="h1"
             className="volkhov font-bold text-[3rem] md:text-[4.73756rem] leading-large text-lightBlack"
           >
-            Bem-vindo à ConvertaX
+            Bem-vindo à 
           </Typography>
           <Typography
             variant="body1"
