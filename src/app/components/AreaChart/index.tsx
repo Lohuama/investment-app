@@ -7,19 +7,17 @@ interface SaldoData {
 }
 
 const AreaChartComponent = ({ saldoInicial, saldoEsperado }: { saldoInicial: number; saldoEsperado: number }) => {
-    // Calcula o saldo ao longo do tempo com os juros
     const data: SaldoData[] = [];
     const taxaMensal = 0.52 / 100;
     let saldoAtual = saldoInicial;
 
-    // Gera dados para cada mês até o máximo de 12 meses
     for (let i = 0; i < 12; i++) {
         const month = new Date().toLocaleString('default', { month: 'short' });
         data.push({ month, saldo: saldoAtual });
 
         saldoAtual = saldoAtual * (1 + taxaMensal);
         if (saldoAtual >= saldoEsperado) {
-            break; // Para se atingir ou superar o saldo esperado
+            break; 
         }
     }
 
@@ -29,7 +27,7 @@ const AreaChartComponent = ({ saldoInicial, saldoEsperado }: { saldoInicial: num
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip formatter={(value: any) => `R$ ${value.toFixed(2)}`} />
                 <Legend />
                 <Area type="monotone" dataKey="saldo" stroke="#8884d8" fill="#8884d8" />
             </AreaChart>

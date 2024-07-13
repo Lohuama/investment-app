@@ -11,7 +11,7 @@ import InvestmentViewComponent from '../components/InvestmentViewComponent';
 
 interface InvestmentData {
     proprietario: string;
-    dataCriacao: string; // ou Date, dependendo do formato em que está salvo no localStorage
+    dataCriacao: string; 
     valorInicial: number;
     withdrawals: { month: string; amount: number}[];
 }
@@ -20,7 +20,6 @@ const InvestmentViewPage = () => {
     const [investmentData, setInvestmentData] = useState<InvestmentData | null>(null);
 
     useEffect(() => {
-        // Verifica se há dados salvos no Local Storage ao montar a página
         const savedData = localStorage.getItem('investmentData');
         if (savedData) {
             setInvestmentData(JSON.parse(savedData));

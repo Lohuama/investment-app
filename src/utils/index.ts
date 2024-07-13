@@ -16,7 +16,7 @@ export const investmentData = {
   };
   export const investmentData1 = {
     initialValue: 10000,
-    creationDate: new Date(2023, 0, 1), // 1 de Janeiro de 2023
+    creationDate: new Date(2023, 0, 1), 
     withdrawals: [
       { month: "Jan", amount: 0, date: new Date(2023, 0, 31) }, 
       { month: "Feb", amount: 0, date: new Date(2023, 1, 28) }, 
@@ -29,7 +29,7 @@ export const investmentData = {
   
   export const investmentData2 = {
     initialValue: 8000,
-    creationDate: new Date(2019, 0, 1), // 1 de Janeiro de 2019
+    creationDate: new Date(2019, 0, 1), 
     withdrawals: [
       { month: "Jan", amount: 0, date: new Date(2019, 0, 31) }, 
       { month: "Feb", amount: 0, date: new Date(2019, 1, 28) }, 
@@ -40,21 +40,16 @@ export const investmentData = {
     ]
   };
 
-   // Função para calcular o saldo esperado com ganhos compostos
    export const calculateExpectedBalance = (initialValue: number, creationDate: Date, withdrawals: { month: string; amount: number}[]) => {
-    const annualInterestRate = 0.52 / 100; // Taxa de juros anual (0.52% por mês)
+    const annualInterestRate = 0.52 / 100; 
     const currentDate = new Date();
     let balance = initialValue;
   
-    // Diferença em meses desde a criação
     const monthsDiff = (currentDate.getFullYear() - creationDate.getFullYear()) * 12 + (currentDate.getMonth() - creationDate.getMonth());
   
-    // Aplicar ganhos
     for (let i = 0; i < monthsDiff; i++) {
       balance *= (1 + annualInterestRate);
     }
-  
-    // Deduzir retiradas
     withdrawals.forEach((withdrawal) => {
       balance -= withdrawal.amount;
     });

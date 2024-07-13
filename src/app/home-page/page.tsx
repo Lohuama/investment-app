@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Typography, Button, Grid, Paper } from '@mui/material';
 import NavBar from '../components/Navbar';
 
-// Importe os componentes dinamicamente
 const AreaChartComponent = dynamic(() => import('../components/AreaChart'));
 const BarChartComponent = dynamic(() => import('../components/BarChart'));
 const LineChartComponent = dynamic(() => import('../components/LineChart'));
@@ -14,7 +13,6 @@ const GridItem = dynamic(() => import('../components/GridItem'));
 export default function Home() {
   const [investimento, setInvestimento] = useState(null);
 
-  // Dados mockados para os gráficos
   const mockAreaChartData = [10, 20, 30, 40, 50, 60, 70];
   const mockBarChartData = [5, 15, 25, 35, 45, 55, 65];
 
@@ -47,7 +45,6 @@ export default function Home() {
     <main className="relative poppins md:px-[9rem]">
       <NavBar />
       <div className="px-4 flex flex-col gap-[7.69rem]">
-        {/* Hero Section */}
         <section className="section relative mt-[4rem] text-center opacity-0">
           <Typography
             variant="h1"
@@ -73,23 +70,21 @@ export default function Home() {
           </a>
         </section>
 
-        {/* Chart Section */}
         <section className="section relative mt-[4rem] opacity-0">
-  <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
-    <Typography
-      variant="body1"
-      className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
-    >
-      Segurança e transparência.
-    </Typography>
-    <div className="w-full max-w-[1400px]">
-      <LineChartComponent />
-    </div>
-  </div>
-</section>
+          <div className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
+            <Typography
+              variant="body1"
+              className="my-[1.6rem] leading-[1.692rem] text-lightGray text-[1rem]"
+            >
+              Segurança e transparência.
+            </Typography>
+            <div className="w-full max-w-[1400px]">
+              <LineChartComponent />
+            </div>
+          </div>
+        </section>
 
 
-        {/* Features Section */}
         <section className="section relative mt-[4rem] text-center opacity-0">
           <Typography
             variant="h2"
@@ -145,8 +140,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Investment Details Section */}
         {investimento && (
           <section className="section relative mt-[4rem] opacity-0">
             <Paper elevation={4} sx={{ padding: 4 }}>
@@ -181,13 +174,10 @@ export default function Home() {
                     Valor Inicial: {investimento.valorInicial}
                   </Typography>
                 </Grid>
-                {/* Aqui você pode adicionar mais informações conforme necessário */}
               </Grid>
             </Paper>
           </section>
         )}
-
-        {/* Contact Section */}
         <section className="section relative mt-[4rem] text-center opacity-0">
           <Typography
             variant="h2"
