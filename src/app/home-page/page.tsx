@@ -78,9 +78,7 @@ export default function Home() {
             >
               Segurança e transparência.
             </Typography>
-            <div className="w-full max-w-[1400px]">
-              <LineChartComponent />
-            </div>
+           
           </div>
         </section>
 

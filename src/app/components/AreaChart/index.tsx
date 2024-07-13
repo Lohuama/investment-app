@@ -27,7 +27,7 @@ const AreaChartComponent = ({ saldoInicial, saldoEsperado }: { saldoInicial: num
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value: any) => `R$ ${value.toFixed(2)}`} />
+                <Tooltip formatter={(value: any) => `R$ ${value}`} />
                 <Legend />
                 <Area type="monotone" dataKey="saldo" stroke="#8884d8" fill="#8884d8" />
             </AreaChart>
